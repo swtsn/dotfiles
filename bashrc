@@ -1,7 +1,9 @@
 # EXPORTS
+export GOPATH=$HOME/dev/go-workspace
 export HISTFILESIZE=10000
 export HISTCONTROL=ignoredups
-export PATH=/Applications/Postgres.app/Contents/MacOS/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
+export PATH=/Applications/Postgres.app/Contents/MacOS/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/go/bin:$GOPATH/bin
+export PYTHONDONTWRITEBYTECODE=1
 
 BLACK='\e[0;30m'
 BLUE='\e[0;34m'

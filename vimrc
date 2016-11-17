@@ -2,7 +2,23 @@
 "                      .vimrc -- the way it ought to be                        "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+""""""""""""""
+"   Vundle   "
+""""""""""""""
 set nocompatible       " no compatibility with vi
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
+Plugin 'nvie/vim-flake8'
+Plugin 'elzr/vim-json'
+Plugin 'scrooloose/syntastic'
+Plugin 'fatih/vim-go'
+call vundle#end()
+filetype plugin indent on
+
 filetype on            " recognize syntax by file extension
 filetype indent on     " check for indent file
 syntax on              " syntax highlighting
