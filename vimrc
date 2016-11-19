@@ -1,12 +1,9 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                      .vimrc -- the way it ought to be                        "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-""""""""""""""
-"   Vundle   "
-""""""""""""""
+"""""
+" Vundle setup
+"""""
 set nocompatible       " no compatibility with vi
-filetype off
+filetype off           " recognize syntax by file extension
+au! FileType python setl nosmartindent    " Don't use smartindent for python files
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
@@ -14,41 +11,44 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'nvie/vim-flake8'
 Plugin 'elzr/vim-json'
-Plugin 'scrooloose/syntastic'
-Plugin 'fatih/vim-go'
-call vundle#end()
-filetype plugin indent on
+call vundle#end()            " required
+filetype plugin indent on    " required
 
-filetype on            " recognize syntax by file extension
-filetype indent on     " check for indent file
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                      .vimrc -- the way it ought to be                        "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 syntax on              " syntax highlighting
 hi clear search        " do not highlight all search matches
 
 set ai
 set si
 
-set background=light   " background light, so foreground not bold
-set backspace=2        " allow <BS> to go past last insert
-set gdefault           " assume :s uses /g
-set ignorecase         " ignore case in search patterns
-set smartcase          " searches are case-sensitive if caps used
-set incsearch          " immediately highlight search matches
-set noerrorbells       " no beeps on errors
-set nomodeline         " prevent others from overriding this .vimrc
-set number             " display line numbers
-set ruler              " display row, column and % of document
-set showcmd            " show partial commands in the status line
-set showmatch          " show matching () {} etc.
-set showmode           " show current mode
-set expandtab          " expand tabs with spaces
-set tabstop=2          " <Tab> move three characters
-set shiftwidth=2       " >> and << shift 3 spaces
-set nowrap             " don't soft wrap
-"set textwidth=89       " hard wrap at 89 characters
-set modeline           " check for a modeline
-set softtabstop=2      " see spaces as tabs
-set scrolloff=5        " start scrolling when cursor is N lines from edge
-set laststatus=2       " always show the bottom status bar
+set background=light  " background light, so foreground not bold
+set backspace=2       " allow <BS> to go past last insert
+set gdefault          " assume :s uses /g
+set ignorecase        " ignore case in search patterns
+set smartcase         " searches are case-sensitive if caps used
+set incsearch         " immediately highlight search matches
+set noerrorbells      " no beeps on errors
+set nomodeline        " prevent others from overriding this .vimrc
+set number            " display line numbers
+set ruler             " display row, column and % of document
+set showcmd           " show partial commands in the status line
+set showmatch         " show matching () {} etc.
+set showmode          " show current mode
+set expandtab         " expand tabs with spaces
+set tabstop=2         " <Tab> move four characters
+set shiftwidth=2      " >> and << shift 2 spaces
+set nowrap            " don't soft wrap
+"set textwidth=89      " hard wrap at 89 characters
+set modeline          " check for a modeline
+set softtabstop=2     " see spaces as tabs
+set scrolloff=5       " start scrolling when cursor is N lines from edge
+set laststatus=2      " always show the bottom status bar
+set tags=~/.python-tags;~/dev     " set tag location
 
 " custom status bar setup
 set statusline=%<%f\ %m\ %h%r%=%b\ 0x%B\ \ %l,%c%V\ %P
@@ -57,8 +57,8 @@ noremap <Ins> 2<C-Y>   " <Ins> defaults like i
 noremap <Del> 2<C-E>   " <Del> defaults like x
 
 " Highlights long lines
-"highlight OverLength ctermfg=red
-"match OverLength /\%91v.\+/
+highlight OverLength ctermfg=red
+match OverLength /\%161v.\+/
 
 " Use the space key to open and close code folds
 :vnoremap <space> zf<CR>
@@ -85,6 +85,11 @@ noremap <Del> 2<C-E>   " <Del> defaults like x
 :nnoremap ,a <c-w><Left><CR>
 :nnoremap ,d <c-w><Right><CR>
 
+" Show and hide extra whitespace
+:highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+:nnoremap ,z :match ExtraWhitespace /\s\+$/<CR>
+:nnoremap ,x :match<CR>
+
 " Call 'svn blame' on the current file and grab the output for the current line
 " plus the surrounding context. Display the result via echo and redraw the
 " screen after input.
@@ -101,4 +106,3 @@ function SvnBlame(linesOfContext)
    norm zz
    redraw!
 endfunction
-noremap <C-b> :call SvnBlame(6)<CR>
