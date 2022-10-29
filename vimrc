@@ -11,6 +11,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'nvie/vim-flake8'
 Plugin 'elzr/vim-json'
+Plugin 'kaicataldo/material.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -40,12 +42,12 @@ set showcmd           " show partial commands in the status line
 set showmatch         " show matching () {} etc.
 set showmode          " show current mode
 set expandtab         " expand tabs with spaces
-set tabstop=2         " <Tab> move four characters
-set shiftwidth=2      " >> and << shift 2 spaces
+set tabstop=4         " <Tab> move four characters
+set shiftwidth=4      " >> and << shift 2 spaces
 set nowrap            " don't soft wrap
 "set textwidth=89      " hard wrap at 89 characters
 set modeline          " check for a modeline
-set softtabstop=2     " see spaces as tabs
+set softtabstop=4     " see spaces as tabs
 set scrolloff=5       " start scrolling when cursor is N lines from edge
 set laststatus=2      " always show the bottom status bar
 set tags=~/.python-tags;~/dev     " set tag location
@@ -59,6 +61,10 @@ noremap <Del> 2<C-E>   " <Del> defaults like x
 " Highlights long lines
 highlight OverLength ctermfg=red
 match OverLength /\%161v.\+/
+
+
+highlight LineNr ctermfg=grey
+highlight Statement ctermfg=lightmagenta
 
 " Use the space key to open and close code folds
 :vnoremap <space> zf<CR>
@@ -89,20 +95,3 @@ match OverLength /\%161v.\+/
 :highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
 :nnoremap ,z :match ExtraWhitespace /\s\+$/<CR>
 :nnoremap ,x :match<CR>
-
-" Call 'svn blame' on the current file and grab the output for the current line
-" plus the surrounding context. Display the result via echo and redraw the
-" screen after input.
-function SvnBlame(linesOfContext)
-   let pos = line(".")
-   let text = system("svn blame " . expand("%:p"))
-   let tempName = tempname()
-
-   exec "redir! > " . tempName
-   silent echon text
-   redir END
-   execute "botr " . (a:linesOfContext * 2 + 1) . "split " . tempName
-   exec pos
-   norm zz
-   redraw!
-endfunction
