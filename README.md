@@ -3,4 +3,8 @@ README
 All the dotfiles
 
 TODO:
-- Add script to set up symlinks and grab necessary files
+- Add bootstrap executable
+  - Detect brew support and install requisites like iTerm2
+- Set up oh my zsh and move theme into place
+- Link iterm prefs
+- Perform vim plugin installs
