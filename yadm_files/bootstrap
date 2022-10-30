@@ -1,0 +1,45 @@
+#!/bin/sh
+
+system_type=$(uname -s)
+
+# Install oh-my-zsh
+echo "Bootstraping Oh My Zsh"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --keep-zshrc
+# TODO: Figure out a better dir structure
+cp ~/yadm_files/swatson.zsh-theme ~/.oh-my-zsh/themes/
+
+# Configure vim
+echo "Bootstraping Vim"
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim -S <(echo -e "VundleInstall \n q \n q")
+
+# If there's issues with the above way of installing Vundle plugins, try the below block instead.
+# if command -v vim >/dev/null 2>&1; then
+#     echo "Bootstraping Vim"
+#     vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+# fi
+
+# OSX-specific initialization
+if [ "$system_type" = "Darwin" ]; then
+
+    # Install homebrew if it's missing
+    if ! command -v brew >/dev/null 2>&1; then
+        echo "Installing homebrew"
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
+
+    # Install brew bundle if available
+    if [ -f "$HOME/.Brewfile" ]; then
+        echo "Updating homebrew bundle"
+        brew bundle --global
+    fi
+
+	# Configure iterm2
+	# This is TODO still
+    # if [ -d "$HOME/.iterm2" ]; then
+    #     echo "Setting iTerm preference folder"
+    #     defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.iterm2"
+    # fi
+
+fi
+
