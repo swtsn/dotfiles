@@ -14,20 +14,17 @@ unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
-export ZSH=$HOME/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export UPDATE_ZSH_DAYS=7
 
 # Use custom theme
 ZSH_THEME="swatson"
+
 # Don't automatically update terminal title
 DISABLE_AUTO_TITLE="true"
 
 HYPHEN_INSENSITIVE="true"
-
-# Don't share active history between tmux windows
-setopt noincappendhistory
-setopt nosharehistory
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -56,7 +53,7 @@ bindkey "^R" history-incremental-search-backward
 export KEYTIMEOUT=1
 
 alias glog="git log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative"
-alias gclean="git clean -fxd --exclude=config/"
+alias gclean="git clean -fxd"
 
 # ls
 alias ls='ls --color -FG'
@@ -70,8 +67,14 @@ alias lr='ls -lR'
 alias lt='ls -ltr'
 alias lm='ls -l |more'
 
+# Don't share active history between tmux windows
+setopt noincappendhistory
+setopt nosharehistory
+
 # Refresh prompt line
 setopt PROMPT_SUBST
+
+# Load colors
 autoload -Uz colors && colors
 
 # Replicate CSSH in tmux
@@ -102,3 +105,11 @@ function git_branch()
 {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
+
+# zsh completions
+if type brew &>/dev/null; then
+  FPATH=/usr/local/share/zsh-completions:/Users/swatson/.oh-my-zsh/plugins/ssh-agent:/Users/swatson/.oh-my-zsh/plugins/git:/Users/swatson/.oh-my-zsh/functions:/Users/swatson/.oh-my-zsh/completions:/Users/swatson/.oh-my-zsh/cache/completions:/usr/local/share/zsh/site-functions:/usr/share/zsh/site-functions:/usr/share/zsh/5.8.1/functions
+
+  autoload -Uz compinit
+  compinit -u
+fi
