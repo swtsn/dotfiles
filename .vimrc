@@ -15,6 +15,7 @@ Plugin 'kaicataldo/material.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'hashivim/vim-terraform'
 Plugin 'fatih/vim-go'
+Plugin 'tsandall/vim-rego'
 Plugin 'nathanaelkane/vim-indent-guides'
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -119,3 +120,14 @@ autocmd FileType bash,scala,perl,css,javascript,java,xs,xml set tabstop=8 shiftw
 autocmd FileType python,ruby,rakefile,c,cpp,html,eruby,vim  set tabstop=8 shiftwidth=4 smarttab expandtab softtabstop=4 autoindent
 autocmd FileType avro-idl,json,rest                         set tabstop=8 shiftwidth=4 smarttab expandtab softtabstop=4 autoindent
 autocmd FileType go                                         set tabstop=4 shiftwidth=4 smarttab softtabstop=4 autoindent
+
+" Golang Highlighting
+let g:go_highlight_structs = 1 
+let g:go_highlight_methods = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1

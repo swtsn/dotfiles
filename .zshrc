@@ -52,7 +52,7 @@ bindkey "^R" history-incremental-search-backward
 # Reduce key response lag
 export KEYTIMEOUT=1
 
-alias glog="git log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative"
+alias glog="git log --no-merges --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative"
 alias gclean="git clean -fxd"
 
 # ls
@@ -73,6 +73,9 @@ setopt nosharehistory
 
 # Refresh prompt line
 setopt PROMPT_SUBST
+
+# Set XDG
+export XDG_CACHE_HOME=~/.cache
 
 # Load colors
 autoload -Uz colors && colors
@@ -113,3 +116,14 @@ if type brew &>/dev/null; then
   autoload -Uz compinit
   compinit -u
 fi
+
+# Shamelessly stolen from Will @ https://github.com/wtait1/dot/tree/234db17d9a374bdcdfb39133fd100183ac223cef
+function ccd() {
+    mkdir -p $1 && cd $1
+}
+
+function cfp() {
+    FILEPATH="$(pwd)/$1"
+    echo "Copied path $FILEPATH"
+    echo -n "$FILEPATH" | pbcopy
+}
