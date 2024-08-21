@@ -1,0 +1,6 @@
+vim.cmd("setlocal autoindent")
+vim.cmd("setlocal tabstop=4")
+vim.cmd("setlocal shiftwidth=4")
+vim.cmd("setlocal smarttab")
+vim.cmd("setlocal softtabstop=4")
+vim.cmd("setlocal expandtab")

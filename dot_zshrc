@@ -1,0 +1,77 @@
+# The following lines were added by compinstall
+zstyle :compinstall filename '$HOME/.zshrc'
+
+autoload -Uz compinit
+compinit
+
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+setopt appendhistory autocd nomatch notify
+unsetopt beep
+bindkey -e
+# End of lines configured by zsh-newuser-install
+
+export ZSH="$HOME/.oh-my-zsh"
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+export UPDATE_ZSH_DAYS=7
+
+# Use custom theme
+ZSH_THEME="swatson"
+
+# Don't automatically update terminal title
+DISABLE_AUTO_TITLE="true"
+
+HYPHEN_INSENSITIVE="true"
+
+plugins=(git ssh-agent)
+
+# Configure ssh-agent
+zstyle :omz:plugins:ssh-agent agent-forwarding yes
+zstyle :omz:plugins:ssh-agent helper ksshaskpass
+zstyle :omz:plugins:ssh-agent lazy yes
+
+source $ZSH/oh-my-zsh.sh
+
+bindkey "^R" history-incremental-search-backward
+
+# Reduce key response lag
+export KEYTIMEOUT=1
+
+export KUBE_EDITOR=nvim
+
+alias glog="git log --no-merges --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative"
+alias gclean="git clean -fxd"
+
+# ls
+alias ls='ls --color -FG'
+alias ll='ls -al'
+alias la='ls -Al'
+alias lx='ls -lXB'
+alias lk='ls -lSr'
+alias lc='ls -lcr'
+alias lu='ls -lur'
+alias lr='ls -lR'
+alias lt='ls -ltr'
+alias lm='ls -l |more'
+
+# Don't share active history between tmux windows
+setopt noincappendhistory
+setopt nosharehistory
+
+# Refresh prompt line
+setopt PROMPT_SUBST
+
+# Set XDG
+export XDG_CACHE_HOME=~/.cache
+
+# Load colors
+autoload -Uz colors && colors
+
+# Git branch prompt string
+function git_branch()
+{
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
