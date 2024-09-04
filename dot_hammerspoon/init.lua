@@ -50,6 +50,8 @@ local windowLayout = {
     {nil, hs.window'Google Chrome %- Shane %(Work%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.015, .98, .316), nil, nil},
     {"Slack",  nil, homeVerticalMonitor, hs.geometry.rect(0.01, 0.341, .98, .316), nil, nil},
     {nil, hs.window'Google Chrome %- Shane %(Personal%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.667, .98, .316), nil, nil},
+    -- Home layout: Horizontal Monitor
+    -- Work layout: External Monitor
     -- {nil, hs.window'Google Chrome %- Shane %(Work%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.02, .98, .3), nil, nil},
     -- {"Mail",    nil,          homeVerticalMonitor, hs.layout.right50,   nil, nil},
     -- {"iTunes",  "iTunes",     homeVerticalMonitor, hs.layout.maximized, nil, nil},
