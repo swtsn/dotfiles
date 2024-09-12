@@ -47,9 +47,9 @@ local homeVerticalMonitor = "DELL U2718Q"
 
 local windowLayout = {
     -- Slack goes in the middle
-    {nil, hs.window'Google Chrome %- Shane %(Work%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.015, .98, .316), nil, nil},
+    {nil, hs.window'Google Chrome %- Shane %(Shane %(Work%)%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.015, .98, .316), nil, nil},
     {"Slack",  nil, homeVerticalMonitor, hs.geometry.rect(0.01, 0.341, .98, .316), nil, nil},
-    {nil, hs.window'Google Chrome %- Shane %(Personal%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.667, .98, .316), nil, nil},
+    {nil, hs.window'Google Chrome %- Shane %(Shane %(Personal%)%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.667, .98, .316), nil, nil},
     -- Home layout: Horizontal Monitor
     -- Work layout: External Monitor
     -- {nil, hs.window'Google Chrome %- Shane %(Work%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.02, .98, .3), nil, nil},
@@ -82,10 +82,10 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Left", function()
   local screen = win:screen()
   local max = screen:frame()
 
-  f.x = max.x
-  f.y = max.y
-  f.w = max.w / 2
-  f.h = max.h
+  f.x = max.x + (max.w * 0.005)
+  f.y = max.y + (max.h * 0.01)
+  f.w = 0.98 * (max.w / 2)
+  f.h = 0.98 * max.h
   win:setFrame(f)
 end)
 
@@ -95,10 +95,10 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Right", function()
   local screen = win:screen()
   local max = screen:frame()
 
-  f.x = max.x + (max.w / 2)
-  f.y = max.y
-  f.w = max.w / 2
-  f.h = max.h
+  f.x = max.x + (max.w / 2) + (max.w * 0.005)
+  f.y = max.y + (max.h * 0.01)
+  f.w = 0.98 * max.w / 2
+  f.h = 0.98 * max.h
   win:setFrame(f)
 end)
 
