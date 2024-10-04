@@ -39,7 +39,7 @@ require("lazy").setup({
 	      ensure_installed = {
           "bash", "c", "dockerfile", "git_config", "git_rebase",
           "gitattributes", "gitcommit", "gitignore", "go", "gomod", "gosum",
-          "gotmpl", "hocon", "java", "json", "lua", "make", "markdown",
+          "gotmpl", "hocon", "java", "json", "kotlin", "lua", "make", "markdown",
           "python", "rego", "rust", "ssh_config", "terraform", "tmux",
           "typescript", "vim", "vimdoc", "query", "yaml",
 	      },
@@ -100,7 +100,12 @@ require("lazy").setup({
         "williamboman/mason.nvim",
       },
       config = function()
-        require("mason-lspconfig").setup()
+        require("mason-lspconfig").setup{
+          ensure_installed = {
+            "bashls", "gopls", "jsonls", "kotlin_language_server", "pyright", "vimls",
+          },
+          automatic_installation = true,
+        }
         require("mason-lspconfig").setup_handlers({
             function (server_name)
                 require("lspconfig")[server_name].setup({})

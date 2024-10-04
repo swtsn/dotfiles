@@ -2,9 +2,36 @@
 	name = Shane Watson
 	email = shane.watson@flockfreight.com
 [core]
-	editor = /usr/local/bin/nvim
+	editor = nvim
 [push]
 	autoSetupRemote = true
 	autoSetupRemote = true
 [alias]
     ll = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+[fetch]
+	prune = true
+	prune = true
+	prune = true
+	prune = true
+	prune = true
+	prune = true
+[pull]
+	rebase = true
+	ff = only
+	rebase = true
+	ff = only
+	rebase = true
+	ff = only
+	rebase = true
+	ff = only
+	rebase = true
+	ff = only
+	rebase = true
+	ff = only
+[rerere]
+	enabled = true
+	enabled = true
+	enabled = true
+	enabled = true
+	enabled = true
+	enabled = true
