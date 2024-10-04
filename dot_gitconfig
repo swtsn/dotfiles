@@ -1,37 +1,26 @@
 [user]
 	name = Shane Watson
-	email = shane.watson@flockfreight.com
+	email = shane.m.watson@gmail.com
 [core]
 	editor = nvim
 [push]
 	autoSetupRemote = true
-	autoSetupRemote = true
 [alias]
-    ll = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+        ll = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
 [fetch]
-	prune = true
-	prune = true
-	prune = true
-	prune = true
-	prune = true
 	prune = true
 [pull]
 	rebase = true
 	ff = only
-	rebase = true
-	ff = only
-	rebase = true
-	ff = only
-	rebase = true
-	ff = only
-	rebase = true
-	ff = only
-	rebase = true
-	ff = only
 [rerere]
 	enabled = true
-	enabled = true
-	enabled = true
-	enabled = true
-	enabled = true
-	enabled = true
+
+# Include .gitconfig with different email for work directory
+[includeIf "gitdir:${HOME}/ff/work/"]
+    path = ${HOME}/ff/work/.gitconfig
+
+# rewrite ssh and https urls to use the custom ssh key
+[url "github-work:FlockFreight/"]
+    insteadOf = git@github.com:FlockFreight/
+[url "github-work:FlockFreight/"]
+    insteadOf = https://github.com/FlockFreight/
