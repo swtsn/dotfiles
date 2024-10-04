@@ -24,3 +24,7 @@
     insteadOf = git@github.com:FlockFreight/
 [url "github-work:FlockFreight/"]
     insteadOf = https://github.com/FlockFreight/
+[url "github-personal:swtsn/"]
+    insteadOf = git@github.com:swtsn/
+[url "github-personal:swtsn/"]
+    insteadOf = https://github.com/swtsn/
