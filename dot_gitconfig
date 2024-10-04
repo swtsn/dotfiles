@@ -3,6 +3,7 @@
 	email = shane.m.watson@gmail.com
 [core]
 	editor = nvim
+	excludesFile = /Users/swatson/.config/git/ignore
 [push]
 	autoSetupRemote = true
 [alias]
