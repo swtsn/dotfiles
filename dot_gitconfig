@@ -17,8 +17,8 @@
 	enabled = true
 
 # Include .gitconfig with different email for work directory
-[includeIf "gitdir:${HOME}/ff/work/"]
-    path = ${HOME}/ff/work/.gitconfig
+[includeIf "gitdir:~/ff/work/"]
+    path = ~/ff/work/.gitconfig
 
 # rewrite ssh and https urls to use the custom ssh key
 [url "github-work:FlockFreight/"]
