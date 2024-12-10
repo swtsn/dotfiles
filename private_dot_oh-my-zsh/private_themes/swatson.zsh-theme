@@ -238,4 +238,4 @@ build_prompt() {
 # Start of prompt string clears previous formatting
 #PROMPT='%{%f%b%k%}$(build_prompt) '
 #PROMPT='%{%f%b%k%}%D{%H:%M:%S} [%F{green}%n%f@%F{green}%m%f %F{cyan}%1~%f%F{magenta}$(git_branch)%f]$(build_prompt) '
-PROMPT='%D{%H:%M:%S} $(prompt_virtualenv)[%F{green}%n%f@%F{green}%m%f %F{cyan}%1~%f%F{magenta}$(git_branch)%f]> '
+PROMPT='%D{%H:%M:%S} $(prompt_virtualenv)%f[%F{green}%n%f@%F{green}%m%f %F{cyan}%1~%f%F{magenta}$(git_branch)%f]$(prompt_icon) '
