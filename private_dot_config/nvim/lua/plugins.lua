@@ -39,7 +39,7 @@ require("lazy").setup({
 	      ensure_installed = {
           "bash", "c", "dockerfile", "git_config", "git_rebase",
           "gitattributes", "gitcommit", "gitignore", "go", "gomod", "gosum",
-          "gotmpl", "hocon", "java", "json", "kotlin", "lua", "make", "markdown",
+          "gotmpl", "helm", "hocon", "java", "json", "kotlin", "lua", "make", "markdown",
           "python", "rego", "rust", "ssh_config", "terraform", "tmux",
           "typescript", "vim", "vimdoc", "query", "yaml",
 	      },
@@ -136,9 +136,9 @@ require("lazy").setup({
         require("go").setup()
 				require("go.format").goimports()
       end,
-      event = {"CmdlineEnter"},
-      ft = {"go", 'gomod'},
       build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+      ft = {"go", 'gomod'},
+      build = ':lua require("go.install").update_all_sync()'
     },
     {"github/copilot.vim"},
 		{

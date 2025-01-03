@@ -47,9 +47,9 @@ local homeVerticalMonitor = "DELL U2718Q"
 
 local windowLayout = {
     -- Slack goes in the middle
-    {nil, hs.window'Google Chrome %- Shane %(Shane %(Work%)%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.015, .98, .316), nil, nil},
+    {nil, hs.window'Google Chrome %- Work', homeVerticalMonitor, hs.geometry.rect(0.01, 0.015, .98, .316), nil, nil},
     {"Slack",  nil, homeVerticalMonitor, hs.geometry.rect(0.01, 0.341, .98, .316), nil, nil},
-    {nil, hs.window'Google Chrome %- Shane %(Shane %(Personal%)%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.667, .98, .316), nil, nil},
+    {nil, hs.window'Google Chrome %- Shane %(Personal%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.667, .98, .316), nil, nil},
     -- Home layout: Horizontal Monitor
     -- Work layout: External Monitor
     -- {nil, hs.window'Google Chrome %- Shane %(Work%)', homeVerticalMonitor, hs.geometry.rect(0.01, 0.02, .98, .3), nil, nil},

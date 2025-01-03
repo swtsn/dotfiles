@@ -55,6 +55,23 @@ vim.api.nvim_set_keymap("n", "<leader>ta", ':lua require("neotest").run.attach()
 vim.api.nvim_set_keymap("n", "<leader>to", ':lua require("neotest").output_panel.open()<CR>', {noremap = true})
 vim.api.nvim_set_keymap("n", "<leader>ot", ':lua require("neotest").output_panel.toggle()<CR>', {noremap = true})
 
+-- Refactor keybindings
+vim.api.nvim_set_keymap("n", "<leader>lr", ':lua vim.lsp.buf.rename()<CR>', {noremap = true})
+
+-- Configure gotmpl for template injection. Further information can be found at the following links:
+-- https://github.com/ngalaiko/tree-sitter-go-template#neovim-integration-using-nvim-treesitter
+-- https://github.com/nvim-treesitter/nvim-treesitter/discussions/1917
+vim.filetype.add({
+  extension = {
+    gotmpl = 'gotmpl',
+  },
+  pattern = {
+    [".*/templates/.*%.tpl"] = "helm",
+    [".*/templates/.*%.ya?ml"] = "helm",
+    ["helmfile.*%.ya?ml"] = "helm",
+  },
+})
+
 
 -- Statusline
 --vim.opt.statusline=%<%f\ %m\ %h%r%=%b\ 0x%B\ \ %l,%c%V\ %P
