@@ -39,7 +39,7 @@ require("lazy").setup({
 	      ensure_installed = {
           "bash", "c", "dockerfile", "git_config", "git_rebase",
           "gitattributes", "gitcommit", "gitignore", "go", "gomod", "gosum",
-          "gotmpl", "helm", "hocon", "java", "json", "kotlin", "lua", "make", "markdown",
+          "gotmpl", "helm", "hocon", "java", "jinja", "json", "kotlin", "lua", "make", "markdown",
           "python", "rego", "rust", "ssh_config", "terraform", "tmux",
           "typescript", "vim", "vimdoc", "query", "yaml",
 	      },
@@ -106,26 +106,13 @@ require("lazy").setup({
           },
           automatic_installation = true,
         }
-        require("mason-lspconfig").setup_handlers({
-            function (server_name)
-                require("lspconfig")[server_name].setup({})
-            end,
-            ["lua_ls"] = function ()
-                local lspconfig = require("lspconfig")
-                lspconfig.lua_ls.setup {
-                    settings = {
-                        Lua = {
-                            diagnostics = {
-                                globals = { "hs", "spoon", "vim" }
-                            }
-                        }
-                    }
-                }
-            end,
-        })
       end,
     },
-    {"neovim/nvim-lspconfig"},
+    {"neovim/nvim-lspconfig",
+      dependencies = {
+        "williamboman/mason.nvim",
+      },
+    },
     {
       "ray-x/go.nvim",
       dependencies = {
@@ -136,11 +123,10 @@ require("lazy").setup({
         require("go").setup()
 				require("go.format").goimports()
       end,
-      build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+      event = {"CmdlineEnter"},
       ft = {"go", 'gomod'},
       build = ':lua require("go.install").update_all_sync()'
     },
-    {"github/copilot.vim"},
 		{
 		  "nvim-neotest/neotest",
 		  dependencies = {

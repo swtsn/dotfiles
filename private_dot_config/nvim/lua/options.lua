@@ -1,11 +1,11 @@
 vim.g.mapleader = " "
+vim.g.python3_host_prog = '/Users/swatson/ff/work/dev/shims/python/python'
 
 -- Sane defaults
 vim.opt.number = true
 vim.opt.scrolloff = 10
 vim.opt.termguicolors = true
 vim.opt.wrap = false
-
 
 -- Synchronizes the system clipboard with neovim's clipboard
 vim.opt.clipboard="unnamedplus"
