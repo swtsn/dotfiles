@@ -3,16 +3,16 @@ Host *
   UseKeychain yes
   UseRoaming no
 
-Host github-work
-  HostName github.com
-  User git
-  IdentityFile /Users/swatson/.ssh/flock-github/key
-  IdentitiesOnly yes
-  UpdateHostKeys yes
-
-Host github-personal
-  HostName github.com
-  User git
-  IdentityFile /Users/swatson/.ssh/personal-github/key
-  IdentitiesOnly yes
-  UpdateHostKeys yes
+  # Host github-work
+  #   HostName github.com
+  #   User git
+  #   IdentityFile /Users/swatson/.ssh/flock-github/key
+  #   IdentitiesOnly yes
+  #   UpdateHostKeys yes
+  # 
+  # Host github-personal
+  #   HostName github.com
+  #   User git
+  #   IdentityFile /Users/swatson/.ssh/personal-github/key
+  #   IdentitiesOnly yes
+  #   UpdateHostKeys yes
