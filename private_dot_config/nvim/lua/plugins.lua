@@ -34,8 +34,13 @@ require("lazy").setup({
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    build = ":TSUpdate",
+  },
+  {
+    "MeanderingProgrammer/treesitter-modules.nvim",
     config = function()
-	    require("nvim-treesitter.configs").setup({
+	    require("treesitter-modules").setup({
 	      ensure_installed = {
           "bash", "c", "dockerfile", "git_config", "git_rebase",
           "gitattributes", "gitcommit", "gitignore", "go", "gomod", "gosum",
@@ -45,7 +50,7 @@ require("lazy").setup({
 	      },
 	      auto_install = true,
 	      highlight = {
-		      enable = true,
+	        enable = true,
 	      },
         incremental_selection = {
           enable = true,
@@ -76,113 +81,148 @@ require("lazy").setup({
           },
         },
 	    })
-      end,
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+  },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
     },
-    {"nvim-treesitter/nvim-treesitter-textobjects",},
-		{
-		  "NeogitOrg/neogit",
-		  dependencies = {
-		    "nvim-lua/plenary.nvim",
-		    "sindrets/diffview.nvim",
-		    "nvim-telescope/telescope.nvim",
-		  },
-		  config = true
-		},
-    {
+    config = true
+  },
+  {
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = {
       "williamboman/mason.nvim",
-      config = function()
-        require("mason").setup()
-      end,
     },
-    {
-      "williamboman/mason-lspconfig.nvim",
-      dependencies = {
-        "williamboman/mason.nvim",
+    config = function()
+      require("mason-lspconfig").setup{
+        ensure_installed = {
+          "bashls", "gopls", "jsonls", "kotlin_language_server", "pyright", "vimls",
+        },
+        automatic_installation = true,
+      }
+    end,
+  },
+  {"neovim/nvim-lspconfig",
+    dependencies = {
+      "williamboman/mason.nvim",
+    },
+  },
+  {
+    "ray-x/go.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("go").setup()
+			require("go.format").goimports()
+    end,
+    event = {"CmdlineEnter"},
+    ft = {"go", 'gomod'},
+    build = ':lua require("go.install").update_all_sync()'
+  },
+	{
+	  "nvim-neotest/neotest",
+	  dependencies = {
+	    "nvim-neotest/nvim-nio",
+	    "nvim-lua/plenary.nvim",
+	    "antoinemadec/FixCursorHold.nvim",
+	    "nvim-treesitter/nvim-treesitter",
+      -- Test adapters below this line
+      -- "nvim-neotest/neotest-go",
+      {
+        "fredrikaverpil/neotest-golang",
+            version = "2.3.0",
+            build = function()
+              vim.system({"go", "install", "gotest.tools/gotestsum@latest"}):wait() -- Optional, but recommended
+            end,
+	        },
+    },
+	  config = function()
+      vim.diagnostic.enable(true)
+	    local neotest_ns = vim.api.nvim_create_namespace("neotest")
+	    vim.diagnostic.config({
+	      virtual_text = {
+	        format = function(diagnostic)
+	          local message =
+	            diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+	          return message
+	        end,
+	      },
+	    }, neotest_ns)
+
+      local golang_config = {
+        runner = "gotestsum", -- Optional, but recommended
+      }
+
+	    require("neotest").setup({
+	      adapters = {
+	        require("neotest-golang")(golang_config),
+	      },
+        output = {
+          enabled = true,
+        },
+        output_panel = {
+          enabled = true,
+          open = "botright split | resize 25",
+        },
+	    })
+	  end,
+	},
+  {
+    'saghen/blink.cmp',
+    dependencies = { 'rafamadriz/friendly-snippets' },
+    version = '1.*',
+
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      keymap = { preset = 'default' },
+      appearance = {
+        nerd_font_variant = 'mono'
       },
-      config = function()
-        require("mason-lspconfig").setup{
-          ensure_installed = {
-            "bashls", "gopls", "jsonls", "kotlin_language_server", "pyright", "vimls",
-          },
-          automatic_installation = true,
-        }
-      end,
-    },
-    {"neovim/nvim-lspconfig",
-      dependencies = {
-        "williamboman/mason.nvim",
+      completion = { documentation = { auto_show = true } },
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
       },
+      fuzzy = { implementation = "prefer_rust_with_warning" }
     },
-    {
-      "ray-x/go.nvim",
-      dependencies = {
-        "neovim/nvim-lspconfig",
-        "nvim-treesitter/nvim-treesitter",
-      },
-      config = function()
-        require("go").setup()
-				require("go.format").goimports()
-      end,
-      event = {"CmdlineEnter"},
-      ft = {"go", 'gomod'},
-      build = ':lua require("go.install").update_all_sync()'
-    },
-		{
-		  "nvim-neotest/neotest",
-		  dependencies = {
-		    "nvim-neotest/nvim-nio",
-		    "nvim-lua/plenary.nvim",
-		    "antoinemadec/FixCursorHold.nvim",
-		    "nvim-treesitter/nvim-treesitter",
-        -- Test adapters below this line
-        "nvim-neotest/neotest-go",
-		  },
-		  config = function()
-        vim.diagnostic.enable(true)
-		    local neotest_ns = vim.api.nvim_create_namespace("neotest")
-		    vim.diagnostic.config({
-		      virtual_text = {
-		        format = function(diagnostic)
-		          local message =
-		            diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
-		          return message
-		        end,
-		      },
-		    }, neotest_ns)
-		    require("neotest").setup({
-		      adapters = {
-		        require("neotest-go"),
-		      },
-          output = {
-            enabled = false,
-          },
-          output_panel = {
-            enabled = true,
-            open = "botright split | resize 25",
-          },
-		    })
-		  end,
-		},
-    -- TODO: More configuration here
-    -- {"lukas-reineke/indent-blankline.nvim",
-    --  main = "ibl",
-    --  opts = {},
-    --  config = function()
-    --     local highlight = {
-    --         "CursorColumn",
-    --         "Whitespace",
-    --     }
-    --     require("ibl").setup({
-    --         indent = {
-    --     	highlight = highlight,
-    --     	char = ""
-    --         },
-    --         whitespace = {
-    --             highlight = highlight,
-    --             remove_blankline_trail = false,
-    --         },
-    --         scope = { enabled = false },
-    --     })
-    --  end,
-    --  },
+    opts_extend = { "sources.default" }
+  }
+  -- TODO: More configuration here
+  -- {"lukas-reineke/indent-blankline.nvim",
+  --  main = "ibl",
+  --  opts = {},
+  --  config = function()
+  --     local highlight = {
+  --         "CursorColumn",
+  --         "Whitespace",
+  --     }
+  --     require("ibl").setup({
+  --         indent = {
+  --     	highlight = highlight,
+  --     	char = ""
+  --         },
+  --         whitespace = {
+  --             highlight = highlight,
+  --             remove_blankline_trail = false,
+  --         },
+  --         scope = { enabled = false },
+  --     })
+  --  end,
+  --  },
 })

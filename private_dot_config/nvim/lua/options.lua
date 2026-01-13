@@ -52,7 +52,7 @@ vim.api.nvim_set_keymap("n", "<leader>tr", ':lua require("neotest").run.run()<CR
 vim.api.nvim_set_keymap("n", "<leader>tf", ':lua require("neotest").run.run(vim.fn.expand("%"))<CR>', {noremap = true})
 vim.api.nvim_set_keymap("n", "<leader>ts", ':lua require("neotest").run.stop()<CR>', {noremap = true})
 vim.api.nvim_set_keymap("n", "<leader>ta", ':lua require("neotest").run.attach()<CR>', {noremap = true})
-vim.api.nvim_set_keymap("n", "<leader>to", ':lua require("neotest").output_panel.open()<CR>', {noremap = true})
+vim.api.nvim_set_keymap("n", "<leader>to", ':lua require("neotest").output.open({ enter = true })<CR>', {noremap = true})
 vim.api.nvim_set_keymap("n", "<leader>ot", ':lua require("neotest").output_panel.toggle()<CR>', {noremap = true})
 
 -- Refactor keybindings

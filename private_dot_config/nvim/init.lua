@@ -7,15 +7,18 @@ require("plugins")
 vim.cmd[[highlight ExtraWhitespace ctermbg=lightgreen guibg=lightgreen]]
 
 -- Fix for lua_ls to recognize `vim` as a global
-require("lspconfig").lua_ls.setup({
+vim.lsp.config['lua_ls'] = {
   settings = {
     Lua = {
       diagnostics = {
         globals = {"vim"},
       },
+      hint = {
+        arrayIndex = "Disable",
+      },
     },
   },
-})
+}
 
 -- go.nvim configuration
 -- Run gofmt + goimports on save

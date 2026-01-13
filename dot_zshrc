@@ -51,6 +51,9 @@ alias gclean="git clean -fxd"
 export GOPATH=${HOME}/repos
 export PATH=${PATH}:${GOPATH}/bin
 
+# nvim configuration
+export PATH=${PATH}:${HOME}/.local/share/nvim/site/
+
 # ls
 alias ls='ls --color -FG'
 alias ll='ls -al'
