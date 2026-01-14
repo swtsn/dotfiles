@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -18,18 +18,18 @@ require("lazy").setup({
   {
     "folke/tokyonight.nvim",
     config = function()
-	    require("tokyonight").setup({
-	      style = "moon",
-	      transparent = true,
-	      dim_inactive = true,
-	      styles = {
-		      sidebars = "dark",
-	      },
-	      on_colors = function(colors)
-		      colors.fg_gutter = "#898da0"
+      require("tokyonight").setup({
+        style = "moon",
+        transparent = true,
+        dim_inactive = true,
+        styles = {
+  	      sidebars = "dark",
+        },
+        on_colors = function(colors)
+  	      colors.fg_gutter = "#898da0"
         end,
-	    })
-	  vim.cmd.colorscheme("tokyonight")
+      })
+    vim.cmd.colorscheme("tokyonight")
     end,
   },
   {
@@ -61,31 +61,50 @@ require("lazy").setup({
             node_decremental = "<Leader>sd",
           },
         },
-	      textobjects = {
-          select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-              ["af"] = {query = "@function.outer", desc = "Select function including definition & end"},
-              ["if"] = {query = "@function.inner", desc = "Select function body only"},
-              ["ac"] = {query = "@class.outer", desc = "Select class including definition"},
-              ["ic"] = {query = "@class.inner", desc = "Select inner part of a class region"},
-              ["as"] = {query = "@scope", query_group = "locals", desc = "Select language scope"},
-            },
-            selection_modes = {
-              ['@parameter.outer'] = 'v', -- charwise
-              ['@function.outer'] = 'V', -- linewise
-              ['@class.outer'] = '<c-v>', -- blockwise
-            },
-            include_surrounding_whitespace = true,
-          },
-        },
 	    })
     end,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
+    keys = {
+      { "af", mode = { "x", "o" } },
+      { "if", mode = { "x", "o" } },
+      { "ac", mode = { "x", "o" } },
+      { "ic", mode = { "x", "o" } },
+      { "as", mode = { "x", "o" } },
+    },
+    config = function()
+      require("nvim-treesitter-textobjects").setup({
+        select = {
+          enable = true,
+          lookahead = true,
+          selection_modes = {
+            ['@parameter.outer'] = 'v', -- charwise
+            ['@function.outer'] = 'V', -- linewise
+            ['@class.outer'] = '<c-v>', -- blockwise
+          },
+          include_surrounding_whitespace = true,
+        },
+      })
+
+      local select = require("nvim-treesitter-textobjects.select").select_textobject
+      vim.keymap.set({ "x", "o" }, "af", function()
+        select("@function.outer", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "if", function()
+        select("@function.inner", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "ac", function()
+        select("@class.outer", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "ic", function()
+        select("@class.inner", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "as", function()
+        select("@local.scope", "locals")
+      end)
+    end,
   },
   {
     "NeogitOrg/neogit",
@@ -95,6 +114,9 @@ require("lazy").setup({
       "nvim-telescope/telescope.nvim",
     },
     config = true
+  },
+  {
+    "neovim/nvim-lspconfig",
   },
   {
     "williamboman/mason.nvim",
@@ -115,11 +137,6 @@ require("lazy").setup({
         automatic_installation = true,
       }
     end,
-  },
-  {"neovim/nvim-lspconfig",
-    dependencies = {
-      "williamboman/mason.nvim",
-    },
   },
   {
     "ray-x/go.nvim",
@@ -153,17 +170,17 @@ require("lazy").setup({
 	        },
     },
 	  config = function()
-      vim.diagnostic.enable(true)
-	    local neotest_ns = vim.api.nvim_create_namespace("neotest")
-	    vim.diagnostic.config({
-	      virtual_text = {
-	        format = function(diagnostic)
-	          local message =
-	            diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
-	          return message
-	        end,
-	      },
-	    }, neotest_ns)
+      -- vim.diagnostic.enable(true)
+	    -- local neotest_ns = vim.api.nvim_create_namespace("neotest")
+	    -- vim.diagnostic.config({
+	    --   virtual_text = {
+	    --     format = function(diagnostic)
+	    --       local message =
+	    --         diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+	    --       return message
+	    --     end,
+	    --   },
+	    -- }, neotest_ns)
 
       local golang_config = {
         runner = "gotestsum", -- Optional, but recommended
@@ -184,25 +201,50 @@ require("lazy").setup({
 	  end,
 	},
   {
-    'saghen/blink.cmp',
-    dependencies = { 'rafamadriz/friendly-snippets' },
-    version = '1.*',
+    "saghen/blink.cmp",
+    event = { "InsertEnter", "CmdwinEnter" },
+    dependencies = { "rafamadriz/friendly-snippets" },
+    version = "1.*",
 
-    ---@module 'blink.cmp'
+    ---@module "blink.cmp"
     ---@type blink.cmp.Config
     opts = {
-      keymap = { preset = 'default' },
+      keymap = { preset = "default" },
+
       appearance = {
-        nerd_font_variant = 'mono'
+        nerd_font_variant = "mono"
       },
+
       completion = { documentation = { auto_show = true } },
+
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 100,
+          },
+        },
       },
+
       fuzzy = { implementation = "prefer_rust_with_warning" }
+
     },
     opts_extend = { "sources.default" }
-  }
+  },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
   -- TODO: More configuration here
   -- {"lukas-reineke/indent-blankline.nvim",
   --  main = "ibl",

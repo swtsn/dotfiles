@@ -10,9 +10,6 @@ vim.cmd[[highlight ExtraWhitespace ctermbg=lightgreen guibg=lightgreen]]
 vim.lsp.config['lua_ls'] = {
   settings = {
     Lua = {
-      diagnostics = {
-        globals = {"vim"},
-      },
       hint = {
         arrayIndex = "Disable",
       },

@@ -25,38 +25,38 @@ vim.opt.incsearch = true
 -- " Show and hide extra whitespace
 local whitespacepattern = [[/\s\+$/]]
 local matchcmd = ":match ExtraWhitespace " .. whitespacepattern .. "<cr>"
-vim.api.nvim_set_keymap("n", ",z", matchcmd, {noremap = true})
-vim.api.nvim_set_keymap("n", ",x", ":match<CR>", {noremap = true})
+vim.keymap.set("n", ",z", matchcmd, {noremap = true})
+vim.keymap.set("n", ",x", ":match<CR>", {noremap = true})
 
 -- Configure splits
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.api.nvim_set_keymap("n", ",w", "<c-w><Up><CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", ",s", "<c-w><Down><CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", ",a", "<c-w><Left><CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", ",d", "<c-w><Right><CR>", {noremap = true})
+vim.keymap.set("n", ",w", "<c-w><Up><CR>", {noremap = true})
+vim.keymap.set("n", ",s", "<c-w><Down><CR>", {noremap = true})
+vim.keymap.set("n", ",a", "<c-w><Left><CR>", {noremap = true})
+vim.keymap.set("n", ",d", "<c-w><Right><CR>", {noremap = true})
 
 -- Vim tabs!
-vim.api.nvim_set_keymap("n", ",.", ":tabnew<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", ".,", ":tabclose<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", ",q", ":tabp<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", ",e", ":tabn<CR>", {noremap = true})
+vim.keymap.set("n", ",.", ":tabnew<CR>", {noremap = true})
+vim.keymap.set("n", ".,", ":tabclose<CR>", {noremap = true})
+vim.keymap.set("n", ",q", ":tabp<CR>", {noremap = true})
+vim.keymap.set("n", ",e", ":tabn<CR>", {noremap = true})
 
 -- Toggle the things
-vim.api.nvim_set_keymap("n", "<C-N><C-N>", ":set invnumber<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<C-p><C-p>", ":set invpaste<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<C-w><C-w>", ":set invwrap<CR>", {noremap = true})
+vim.keymap.set("n", "<C-N><C-N>", ":set invnumber<CR>", {noremap = true})
+vim.keymap.set("n", "<C-p><C-p>", ":set invpaste<CR>", {noremap = true})
+vim.keymap.set("n", "<C-w><C-w>", ":set invwrap<CR>", {noremap = true})
 
 -- Neotest keymaps
-vim.api.nvim_set_keymap("n", "<leader>tr", ':lua require("neotest").run.run()<CR>', {noremap = true})
-vim.api.nvim_set_keymap("n", "<leader>tf", ':lua require("neotest").run.run(vim.fn.expand("%"))<CR>', {noremap = true})
-vim.api.nvim_set_keymap("n", "<leader>ts", ':lua require("neotest").run.stop()<CR>', {noremap = true})
-vim.api.nvim_set_keymap("n", "<leader>ta", ':lua require("neotest").run.attach()<CR>', {noremap = true})
-vim.api.nvim_set_keymap("n", "<leader>to", ':lua require("neotest").output.open({ enter = true })<CR>', {noremap = true})
-vim.api.nvim_set_keymap("n", "<leader>ot", ':lua require("neotest").output_panel.toggle()<CR>', {noremap = true})
+vim.keymap.set("n", "<leader>tr", ':lua require("neotest").run.run()<CR>', {noremap = true})
+vim.keymap.set("n", "<leader>tf", ':lua require("neotest").run.run(vim.fn.expand("%"))<CR>', {noremap = true})
+vim.keymap.set("n", "<leader>ts", ':lua require("neotest").run.stop()<CR>', {noremap = true})
+vim.keymap.set("n", "<leader>ta", ':lua require("neotest").run.attach()<CR>', {noremap = true})
+vim.keymap.set("n", "<leader>to", ':lua require("neotest").output.open({ enter = true })<CR>', {noremap = true})
+vim.keymap.set("n", "<leader>ot", ':lua require("neotest").output_panel.toggle()<CR>', {noremap = true})
 
 -- Refactor keybindings
-vim.api.nvim_set_keymap("n", "<leader>lr", ':lua vim.lsp.buf.rename()<CR>', {noremap = true})
+vim.keymap.set("n", "<leader>lr", ':lua vim.lsp.buf.rename()<CR>', {noremap = true})
 
 -- Configure gotmpl for template injection. Further information can be found at the following links:
 -- https://github.com/ngalaiko/tree-sitter-go-template#neovim-integration-using-nvim-treesitter
@@ -72,6 +72,11 @@ vim.filetype.add({
   },
 })
 
+-- Configure diagnostics
+vim.diagnostic.enable(true)
+vim.diagnostic.config({
+  virtual_lines = true,
+})
 
 -- Statusline
 --vim.opt.statusline=%<%f\ %m\ %h%r%=%b\ 0x%B\ \ %l,%c%V\ %P
